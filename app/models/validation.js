@@ -23,5 +23,15 @@ function Validation() {
     return this.printNoti(value.match(letter), errorId, mess);
   };
 
-  this.kiemTraTrungTaiKhoan = function (value, errorId, mess) {};
+  this.kiemTraTrungTaiKhoan = function (value, errorId, mess) {
+    var isExist = false;
+    for (let i = 0; i < listTaiKhoan.length; i++) {
+      var taiKhoan = listTaiKhoan[i];
+      if (taiKhoan === value) {
+        isExist = true;
+        break;
+      }
+    }
+    return this.printNoti(!isExist, errorId, mess);
+  };
 }

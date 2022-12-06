@@ -12,6 +12,7 @@ function getListUser() {
     .getUserAPI()
     .then(function (result) {
       renderTable(result.data);
+      console.log(listTaiKhoan);
     })
     .catch(function (error) {
       console.log(error);
