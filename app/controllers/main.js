@@ -1,4 +1,6 @@
 var userService = new UserService();
+var validation = new Validation();
+var listTaiKhoan = [];
 
 function getEle(id) {
   return document.getElementById(id);
@@ -9,7 +11,6 @@ function getListUser() {
   userService
     .getUserAPI()
     .then(function (result) {
-      console.log(result.data);
       renderTable(result.data);
     })
     .catch(function (error) {
@@ -43,6 +44,7 @@ function renderTable(data) {
         </td>
         </tr>
         `;
+    listTaiKhoan.push(user.taiKhoan);
   });
   getEle("tblDanhSachNguoiDung").innerHTML = content;
 }
@@ -62,11 +64,93 @@ function getUserInfo(id) {
   var hoTen = getEle("HoTen").value;
   var matKhau = getEle("MatKhau").value;
   var email = getEle("Email").value;
-  var ngonNgu = getEle("loaiNgonNgu").value;
-  var loaiND = getEle("loaiNguoiDung").value;
-  var moTa = getEle("MoTa").value;
   var hinhAnh = getEle("HinhAnh").value;
+  var loaiND = getEle("loaiNguoiDung").value;
+  var ngonNgu = getEle("loaiNgonNgu").value;
+  var moTa = getEle("MoTa").value;
 
+  // Cờ
+  var isValid = true;
+
+  // Tài khoản
+  isValid &=
+    validation.kiemTraRong(
+      taiKhoan,
+      "errorTaiKhoan",
+      "(*) Vui lòng nhập tài khoản!"
+    ) &&
+    validation.kiemTraTrungTaiKhoan(
+      taiKhoan,
+      "errorTaiKhoan",
+      "(*) Tài khoản đã tồn tại"
+    );
+
+  // Họ tên
+  isValid &=
+    validation.kiemTraRong(hoTen, "errorHoTen", "(*) Vui lòng nhập họ tên!") &&
+    validation.kiemTraDoDaiVaDinhDang(
+      hoTen,
+      /[A-Za-z]/,
+      "errorHoTen",
+      "(*) Vui lòng nhập họ tên đúng định dạng"
+    );
+
+  //Mật khẩu
+  isValid &=
+    validation.kiemTraRong(
+      matKhau,
+      "errorMatKhau",
+      "(*) Vui lòng nhập mật khẩu!"
+    ) &&
+    validation.kiemTraDoDaiVaDinhDang(
+      matKhau,
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,8}$/,
+      "errorMatKhau",
+      "(*) Vui lòng nhập mật khẩu dài 6-10 ký tự chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt"
+    );
+
+  // Email
+  isValid &=
+    validation.kiemTraRong(email, "errorEmail", "(*) Vui lòng nhập email!") &&
+    validation.kiemTraDoDaiVaDinhDang(
+      email,
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      "errorEmail",
+      "(*) Vui lòng nhập email đúng định dạng"
+    );
+
+  //Hình ảnh
+  isValid &= validation.kiemTraRong(
+    hinhAnh,
+    "errorHinhAnh",
+    "(*) Vui lòng nhập hình ảnh!"
+  );
+
+  // Người dùng
+  isValid &= validation.kiemTraChon(
+    "loaiNguoiDung",
+    "errorLoaiND",
+    "(*) Vui lòng chọn người dùng!"
+  );
+
+  // Ngôn ngữ
+  isValid &= validation.kiemTraChon(
+    "loaiNgonNgu",
+    "errorNgonNgu",
+    "(*) Vui lòng chọn ngôn ngữ!"
+  );
+
+  // Mô tả
+  isValid &=
+    validation.kiemTraRong(moTa, "errorMoTa", "(*) Vui lòng nhập mô tả!") &&
+    validation.kiemTraDoDaiVaDinhDang(
+      moTa,
+      /^\w{1,60}$/,
+      "errorMoTa",
+      "(*) Mô tả không được quá 60 kí tự"
+    );
+
+  if (!isValid) return false;
   var user = new User(
     id,
     taiKhoan,
@@ -79,6 +163,25 @@ function getUserInfo(id) {
     hinhAnh
   );
   return user;
+}
+
+// Thêm user
+function addUser() {
+  if (getUserInfo("")) {
+    var user = getUserInfo("");
+
+    userService
+      .addUserAPI(user)
+      .then(function (result) {
+        alert("Add Success");
+        getListUser();
+
+        document.getElementsByClassName("close")[0].click();
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 }
 
 // Sửa user modal
@@ -100,23 +203,6 @@ function editModal(id) {
       getEle("loaiNguoiDung").value = user.loaiND;
       getEle("MoTa").value = user.moTa;
       getEle("HinhAnh").value = user.hinhAnh;
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-// Thêm user
-function addUser() {
-  var user = getUserInfo("");
-
-  userService
-    .addUserAPI(user)
-    .then(function (result) {
-      alert("Add Success");
-      getListUser();
-
-      document.getElementsByClassName("close")[0].click();
     })
     .catch(function (error) {
       console.log(error);
