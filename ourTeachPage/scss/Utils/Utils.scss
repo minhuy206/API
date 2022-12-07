@@ -1,0 +1,40 @@
+@for $count from 1 to 6 {
+  .nav-item-#{$count} {
+    padding: 0 50px 0 0;
+  }
+}
+
+@for $count from 2 to 5 {
+  .list-item-#{$count} {
+    padding-top: 12px;
+  }
+}
+
+@mixin titleH3($fs, $fw, $mb) {
+  color: $main-color;
+  font-size: $fs;
+  font-weight: $fw;
+  margin-bottom: $mb;
+}
+@mixin titleH1($fs, $fw) {
+  color: black;
+  font-size: $fs;
+  font-weight: $fw;
+}
+
+@mixin footer-li {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@mixin responsive($screen) {
+  @if (map-has-key($map: $breakpoints, $key: $screen)) {
+    $value: map-get(
+      $map: $breakpoints,
+      $key: $screen,
+    );
+    @media screen and (max-width: $value) {
+      @content;
+    }
+  }
+}

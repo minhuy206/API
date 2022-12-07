@@ -1,0 +1,26 @@
+.header-fixed {
+  position: absolute;
+  background-color: transparent;
+  z-index: 1000;
+  width: 100%;
+  transition: all 0.4s ease 0s;
+}
+
+.nav-fixed {
+  position: fixed;
+  z-index: 1500;
+  background-color: #fff;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 5%);
+  .navbar-brand {
+    display: none;
+  }
+  .navbar {
+    height: 48px !important;
+  }
+  .nav-link {
+    line-height: 48px !important;
+    &::after {
+      bottom: -5.5px !important;
+    }
+  }
+}

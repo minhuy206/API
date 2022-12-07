@@ -1,0 +1,29 @@
+.buttonWidget {
+  &__link {
+    display: block;
+    padding: 12px 15px;
+
+    color: white;
+    font-size: 0.7rem;
+
+    box-shadow: 0 0 0 30px $main-color inset;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  i {
+    color: white;
+    font-size: inherit;
+  }
+
+  &:hover {
+    a {
+      text-decoration: none;
+      box-shadow: 0 0 0 1px $main-color inset;
+      color: $main-color;
+      i {
+        color: inherit;
+      }
+    }
+  }
+}

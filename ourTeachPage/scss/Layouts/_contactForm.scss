@@ -1,0 +1,24 @@
+.contactForm {
+  position: relative;
+  padding-top: 48px;
+  &__content {
+    position: relative;
+    z-index: 1000;
+    // width: 1000px;
+  }
+  &__img {
+    margin-top: 60px;
+  }
+  &__bg-bottom {
+    img {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+  // @include responsive(large) {
+  //   .contactForm__left {
+  //   }
+  // }
+}

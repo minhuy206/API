@@ -1,0 +1,28 @@
+.listTeachers {
+  background-color: $listTeachers-bg-color;
+  position: relative;
+
+  &__content {
+    position: relative;
+    z-index: 1000;
+  }
+  &-bg__bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    img {
+      width: 100%;
+    }
+  }
+  @include responsive(extra-small) {
+    .card {
+      width: 80% !important;
+      margin: auto;
+    }
+  }
+  @include responsive(sm) {
+    .card {
+      width: 50%;
+    }
+  }
+}

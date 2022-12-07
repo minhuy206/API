@@ -1,0 +1,26 @@
+.footer-btn {
+  display: inline-block;
+width: 100%;
+padding: 15px 0;
+  border: none;
+  color: black;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  // font-size: 0.7rem;
+  
+  text-align: center;
+
+  box-shadow: 0 0 0 30px $white inset;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 0 0 1px $white inset;
+    text-decoration: none;
+    color: $white;
+  }
+}

@@ -1,0 +1,35 @@
+.carousel {
+  background-image: url(../../img/yellow_top_wave_01.png);
+  background-position: top center;
+  background-repeat: no-repeat;
+  position: relative;
+  &__title {
+    h3 {
+      @include titleH3(1.1rem, 600, 8px);
+    }
+    h1 {
+      @include titleH1(3.8rem, 700);
+    }
+  }
+  &__left {
+    width: 50%;
+  }
+  &__right {
+    width: 50%;
+  }
+  &-background__bottom {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  }
+  @include responsive(sm) {
+    .title {
+    
+    }
+  }
+}
